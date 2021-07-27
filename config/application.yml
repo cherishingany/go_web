@@ -1,0 +1,18 @@
+database:
+  user: root
+  password: tianjin12345
+  host: 172.16.52.168
+  port: 3306
+  database: test
+  charset: utf8
+
+#  //	"Dialect": "mysql",
+#  //		"Database": "***", /*数据库名*/
+#  //		"User": "***",/*用户名*/
+#  //		"Password": "***",/*密码*/
+#  //		"Charset": "utf8", /*字符集 utf8 */
+#  //		"Host": "127.0.0.1", /*数据库地址*/
+#  //		"Port": 3306, /*数据库端口*/
+#  //		"MaxIdleConns": 5, /*空闲时最大的连接数*/
+#  //		"MaxOpenConns": 10 /*最大的连接数*/
+

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            font-size: 20px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        select, button, input {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+<h2>员工查询</h2>
+<label>请输入员工编号:</label>
+<input type="text" id="keyword">
+<button id="search">查询</button>
+<p id="searchResult"></p>
+<h2>员工创建</h2>
+<form id="postForm">
+    <label>请输入员工姓名：</label>
+    <input type="text" name="name"><br>
+    <label>请输入员工编号：</label>
+    <input type="text" name="number"><br>
+    <label>请输入员工性别：</label>
+    <select name="sex">
+        <option value="男">男</option>
+        <option value="女">女</option>
+    </select><br>
+    <label>请输入员工职位：</label>
+    <input type="text" name="job"><br>
+    <button id="save" type="button">保存</button>
+</form>
+<p id="createResult"></p>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js">
+    /*get*/
+    //查询
+    var oSearch = document.getElementById('search');
+
+    //get方式添加数据
+    function addURLParam(url, name, value) {
+        url += (url.indexOf("?") == -1 ? "?" : "&");
+        url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+        return url;
+    }
+
+    oSearch.onclick = function () {
+        //创建xhr对象
+        var xhr;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else {
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        //异步接受响应
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    //实际操作
+                    var data = JSON.parse(xhr.responseText);
+                    if (data.success) {
+                        document.getElementById('searchResult').innerHTML = data.msg;
+                    } else {
+                        document.getElementById('searchResult').innerHTML = '出现错误：' + data.msg;
+                    }
+                } else {
+                    alert('发生错误：' + xhr.status);
+
+                }
+            }
+        }
+        //发送请求
+        var url = 'service.php';
+        url = addURLParam(url, 'number', document.getElementById('keyword').value);
+        xhr.open('get', url, true);
+        xhr.send();
+    }
+    /*post*/
+    //创建
+    var oSave = document.getElementById('save');
+
+    //post方式添加数据
+    function serialize(form) {
+        var parts = [], field = null, i, len, j, optLen, option, optValue;
+        for (i = 0, len = form.elements.length; i < len; i++) {
+            field = form.elements[i];
+            switch (field.type) {
+                case "select-one":
+                case "select-multiple":
+                    if (field.name.length) {
+                        for (j = 0, optLen = field.options.length; j < optLen; j++) {
+                            option = field.options[j];
+                            if (option.selected) {
+                                optValue = "";
+                                if (option.hasAttribute) {
+                                    optValue = (option.hasAttribute("value") ? option.value : option.text);
+                                } else {
+                                    optValue = (option.attributes["value"].specified ? option.value : option.text);
+                                }
+                                parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(optValue));
+                            }
+                        }
+                    }
+                    break;
+                case undefined:   //fieldset
+                case "file":    //file input
+                case "submit":   //submit button
+                case "reset":    //reset button
+                case "button":   //custom button
+                    break;
+                case "radio":    //radio button
+                case "checkbox":  //checkbox
+                    if (!field.checked) {
+                        break;
+                    }
+                /* falls through */
+                default:
+                    //don't include form fields without names
+                    if (field.name.length) {
+                        parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(field.value));
+                    }
+            }
+        }
+        return parts.join("&");
+    }
+
+    oSave.onclick = function () {
+        //创建xhr对象
+        var xhr;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else {
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        //异步接受响应
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    //实际操作
+                    var data = JSON.parse(xhr.responseText);
+                    if (data.success) {
+                        document.getElementById('createResult').innerHTML = data.msg;
+                    } else {
+                        document.getElementById('createResult').innerHTML = '出现错误：' + data.msg;
+                    }
+                } else {
+                    alert('发生错误：' + xhr.status);
+                }
+            }
+        }
+        //发送请求
+        xhr.open('post', 'service.php', true);
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        xhr.send(serialize(document.getElementById('postForm')));
+    }
+</script>
+</body>
+</html>
