@@ -21,6 +21,7 @@ func (registerUser *RegisterUser) UserPasswordBcrypt(c *gin.Context) {
 	Password, err := bcrypt.GenerateFromPassword([]byte(registerUser.Password), bcrypt.DefaultCost)
 	if err == nil {
 		registerUser.Password = string(Password)
+		return
 	}
 	c.JSON(500, gin.H{
 		"code":    500,

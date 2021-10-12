@@ -1,9 +1,9 @@
 database:
-  user: root
-  password: tianjin12345
-  host: 172.16.52.168
+  user: mdm
+  password: Nationsky1@3
+  host: 172.16.50.178
   port: 3306
-  database: test
+  database: school
   charset: utf8
 
 #  //	"Dialect": "mysql",

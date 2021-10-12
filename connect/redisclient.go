@@ -8,7 +8,7 @@ import (
 var pool *redis.Pool
 
 func init() {
-
+	//Tianjin12345!
 	setPasswd := redis.DialPassword("tianjin12345")
 	db := redis.DialDatabase(14)
 
