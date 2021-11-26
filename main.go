@@ -7,7 +7,7 @@ import (
 
 func main() {
 
-	router := engine.New_Engine()
+	router := engine.NewEngine()
 
 	//r.Static("/dwz", "/Users/nationsky/Desktop/goapp/src/go_web/view/html")
 	//

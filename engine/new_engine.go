@@ -5,7 +5,7 @@ import (
 	"go_web/contorl"
 )
 
-func New_Engine() *gin.Engine {
+func NewEngine() *gin.Engine {
 
 	router := gin.Default()
 	router.GET("/ping", func(c *gin.Context) {
@@ -28,7 +28,7 @@ func New_Engine() *gin.Engine {
 			login.POST("/info", contorl.Info)
 			login.POST("/logout", contorl.Logout)
 			login.POST("/createvideo", contorl.CreateVideo)
-			login.GET("/:name",contorl.VideoList)
+			login.GET("/:name", contorl.VideoList)
 		}
 
 		user.POST("/deleteuser", contorl.DeleteUser)
