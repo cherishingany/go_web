@@ -32,11 +32,10 @@ func Userlogin(username, uuid string) {
 	c := GetRedisClient()
 	defer c.Close()
 
-
-	_, err := c.Do("hset", username, "code",1)
+	_, err := c.Do("hset", username, "code", 1)
 	if err != nil {
 		fmt.Println("写入redies成功")
-	}else {
+	} else {
 		fmt.Println(err)
 	}
 }
@@ -58,18 +57,18 @@ func GetUserCode(username string) int {
 	c := GetRedisClient()
 	defer c.Close()
 
-	if info, _ := redis.Int(c.Do("hget", username,"code")); string(rune(info)) == "" {
+	if info, _ := redis.Int(c.Do("hget", username, "code")); string(rune(info)) == "" {
 		return -1
 	} else {
 		return info
 	}
 }
-func SetUserToken(username ,token string) error {
+func SetUserToken(username, token string) error {
 
 	c := GetRedisClient()
 	defer c.Close()
 
-	if _, err := redis.String(c.Do("hset", username,token)); err != nil {
+	if _, err := redis.String(c.Do("hset", username, token)); err != nil {
 		return err
 	} else {
 		return nil
@@ -80,23 +79,21 @@ func GetUserToken(username string) string {
 
 	c := GetRedisClient()
 	defer c.Close()
-
-	if token, _ := redis.String(c.Do("hget", username,"token")); token == "" {
+	token, _ := redis.String(c.Do("hget", username, "token"))
+	if token == "" {
 		return ""
-	} else {
-		return token
 	}
+	return token
+
 }
+
 //从redis中得到uuid
 func GetUseruuid(username string) string {
 
 	c := GetRedisClient()
 	defer c.Close()
-	//if exit, _ := redis.Bool(c.Do("hget", username,"uuid")); exit {
 	uuid, _ := redis.String(c.Do("hget", username, "uuid"))
-
 	//返回-1代表用户未在redis中
 	return uuid
-	//}
-	//return ""
+
 }
