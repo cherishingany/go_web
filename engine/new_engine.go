@@ -3,6 +3,7 @@ package engine
 import (
 	"github.com/gin-gonic/gin"
 	"go_web/contorl"
+	"go_web/middleware"
 )
 
 func NewEngine() *gin.Engine {
@@ -18,8 +19,9 @@ func NewEngine() *gin.Engine {
 	//user.Use(middleware.Header())
 	{
 
-		user.POST("/register3", contorl.Register3)
-		user.POST("/login", contorl.Login)
+		register:=router.Group("")
+		register.Use(middleware.CheckAuthenticationHandlerFunc())
+		register.POST("/register3", contorl.Register3)
 
 		login := user.Group("")
 		//login.Use(middleware.TokenAuthentication())
@@ -31,6 +33,7 @@ func NewEngine() *gin.Engine {
 			login.GET("/:name", contorl.VideoList)
 		}
 
+		user.POST("/login", contorl.Login)
 		user.POST("/deleteuser", contorl.DeleteUser)
 
 	}

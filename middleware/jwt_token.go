@@ -29,6 +29,7 @@ func UserToken(user *userstruct.LoginUsers, c *gin.Context) error {
 			IssuedAt:  time.Now().Unix(),
 		},
 	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, key)
 	logintoken, err := token.SignedString(Secret)
 	if err != nil {

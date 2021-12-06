@@ -3,6 +3,7 @@ module go_web
 go 1.16
 
 require (
+	github.com/casbin/casbin v1.9.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/garyburd/redigo v1.6.2
 	github.com/gin-gonic/gin v1.7.2

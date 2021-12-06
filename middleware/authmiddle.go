@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/casbin/casbin"
 	"github.com/gin-gonic/gin"
 	"go_web/connect"
 	"go_web/model"
@@ -28,3 +29,25 @@ func TokenAuthentication() gin.HandlerFunc {
 
 	}
 }
+
+
+func CheckAuthenticationHandlerFunc()gin.HandlerFunc{
+
+	return func(c *gin.Context) {
+		e:= casbin.NewEnforcer("config/model.conf", "config/policy.csv")
+
+		if b:=CheckAuthentication(e,"","","");!b{
+			c.Abort()
+		}
+		c.Next()
+	}
+}
+
+
+
+// 查看用户权限
+func CheckAuthentication(e *casbin.Enforcer, sub, obj, act string)bool{
+	ok := e.Enforce(sub, obj, act)
+	return ok
+}
+
