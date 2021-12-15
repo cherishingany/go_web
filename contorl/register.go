@@ -10,8 +10,7 @@ import (
 //----------------------------------------------------第三版-------------------------------------------------
 //https://blog.csdn.net/weixin_42279809/article/details/107800081
 
-
-func Register3(c *gin.Context) {
+func Register(c *gin.Context) {
 	//用户结构体数据绑定
 	var registerUser service.RegisterUser
 	if err := middleware.InitializationUser(&registerUser, c); err == nil {

@@ -19,9 +19,9 @@ func NewEngine() *gin.Engine {
 	//user.Use(middleware.Header())
 	{
 
-		register:=router.Group("")
+		register := router.Group("")
 		register.Use(middleware.CheckAuthenticationHandlerFunc())
-		register.POST("/register3", contorl.Register3)
+		register.POST("/register3", contorl.Register)
 
 		login := user.Group("")
 		//login.Use(middleware.TokenAuthentication())
