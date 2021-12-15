@@ -1,7 +1,6 @@
 
 # cherishingany's project
 
-The fantastic ORM library for Golang, aims to be developer friendly.
 
 
 [![go report card](https://goreportcard.com/badge/github.com/go-gorm/gorm "go report card")](https://goreportcard.com/report/github.com/go-gorm/gorm)
